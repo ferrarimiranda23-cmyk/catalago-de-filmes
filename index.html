@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Catalogo filmes</title>
+<link href="style.css" rel="stylesheet"/>
+<link href="pipoca.icon.ico" rel="shortcut icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;display=swap" rel="stylesheet"/>
+</head>
+<body>
+<header>
+<nav>
+<ul class="nav-links">
+<li><a href="#">Início</a></li>
+<li><a href="#">Filmes</a></li>
+
+</ul>
+</nav>
+</header>
+<h1>Aqui você encontra os melhores filmes!</h1>
+<div class="top-controls"><input id="pesquisa" placeholder="Pesquisar por título ou diretor"/><select id="filtroGenero"><option value="Todos">Todos os gêneros</option></select><button id="novoFilme">Adicionar Filme</button></div>
+<div class="galeria">
+<div class="item">
+<div class="poster-placeholder">Pulp Fiction</div>
+<div class="painel">
+<h2>Pulp Fiction</h2>
+<h3>Ano de lançamento: 1994</h3><h3>Gênero: Crime</h3>
+<span>Pulp Fiction: Tempo de Violência (1994), dirigido por Quentin Tarantino, narra três histórias interligadas em Los Angeles, apresentadas em narrativa não-linear que mistura humor irônico e violência estilizada.</span>
+<button>Ver mais</button>
+</div>
+</div>
+<div class="item">
+<div class="poster-placeholder">Clube da Luta</div>
+<div class="painel">
+<h2>Clube da Luta</h2>
+<h3>Ano de lançamento: 1999</h3><h3>Gênero: Drama</h3>
+<span>Clube da Luta segue a história de um homem insatisfeito com sua vida monótona e consumista, que sofre de insônia e frequenta grupos de apoio para se sentir vivo. Durante uma viagem de negócios, ele conhece Tyler Durden, um vendedor de sabonetes carismático e anarquista, com quem funda o Clube da Luta.</span>
+<button>Ver mais</button>
+</div>
+</div>
+<div class="item">
+<div class="poster-placeholder">Scott Pilgrim vs The World</div>
+<div class="painel">
+<h2>Scott Pilgrim vs The World</h2>
+<h3>Ano de lançamento: 2010</h3><h3>Gênero: Comédia</h3>
+<span>Scott Pilgrim é um canadense de 23 anos, baixista da banda de garagem Sex Bob-Omb, que se apaixona por Ramona Flowers. Para começar a namorá-la, ele precisa derrotar os sete ex-namorados do mal de Ramona em combates que misturam luta física e elementos de videogame.</span>
+<button>Ver mais</button>
+</div>
+</div>
+<div class="item">
+<div class="poster-placeholder">Os Caça-Fantasmas</div>
+<div class="painel">
+<h2>Os Caça-Fantasmas</h2>
+<h3>Ano de lançamento: 1984</h3><h3>Gênero: Comédia</h3>
+<span>Em Nova York, Peter Venkman, Ray Stantz e Egon Spengler são três cientistas que se dedicam ao estudo de casos paranormais. Quando são despedidos, abrem a exterminadora de fantasmas "Ghostbusters" e logo enfrentam uma ameaça sobrenatural gigantesca.</span>
+<button>Ver mais</button>
+</div>
+</div>
+<div class="item">
+<div class="poster-placeholder">Tubarão</div>
+<div class="painel">
+<h2>Tubarão</h2>
+<h3>Ano de lançamento: 1975</h3><h3>Gênero: Suspense</h3>
+<span>Tubarão (1975), dirigido por Steven Spielberg, é um thriller de suspense ambientado na fictícia ilha de Amity, onde um gigantesco tubarão-branco começa a atacar banhistas. O xerife local, um biólogo marinho e um caçador profissional unem forças para eliminar o predador.</span>
+<button>Ver mais</button>
+</div>
+</div>
+<div class="item">
+<div class="poster-placeholder">American Psycho</div>
+<div class="painel">
+<h2>American Psycho</h2>
+<h3>Ano de lançamento: 2000</h3><h3>Gênero: Terror Psicológico</h3>
+<span>Psicopata Americano (2000), dirigido por Mary Harron e estrelado por Christian Bale, é um thriller psicológico satírico ambientado em Nova York em 1987. A trama acompanha Patrick Bateman, um rico banqueiro de Wall Street que leva uma dupla vida sombria.</span>
+<button>Ver mais</button>
+</div>
+</div>
+</div>
+<script>
+const itens=document.querySelectorAll('.item');
+const filtro=document.getElementById('filtroGenero');
+const pesquisa=document.getElementById('pesquisa');
+const generos=[...new Set([...itens].map(i=>i.querySelectorAll('h3')[1].textContent.replace('Gênero: ','')))];
+generos.forEach(g=>filtro.innerHTML+=`<option>${g}</option>`);
+itens.forEach(i=>{
+ const del=document.createElement('button');
+ del.textContent='Excluir';
+ del.onclick=()=>{if(confirm('Excluir este filme?')) i.remove();};
+ i.querySelector('.painel').appendChild(del);
+});
+function aplicar(){
+const q=pesquisa.value.toLowerCase();const fg=filtro.value;
+itens.forEach(i=>{
+const gen=i.querySelectorAll('h3')[1].textContent.replace('Gênero: ','');
+const ok=(fg==='Todos'||gen===fg)&&i.innerText.toLowerCase().includes(q);
+i.style.display=ok?'block':'none';
+});
+}
+pesquisa.oninput=aplicar;filtro.onchange=aplicar;
+document.getElementById('novoFilme').onclick=()=>alert('Integrar com backend');
+</script></body>
+</html>
